@@ -1,0 +1,205 @@
+<!DOCTYPE html><html lang="en" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Use Swagger In .NET 5.0 | Ming</title><meta name="keywords" content=".Net"><meta name="author" content="Ming"><meta name="copyright" content="Ming"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="在開發專案前端的過程中，使用 Swagger 讓我省了不少事，提升跟後端溝通的效率，大大減少了溝通成本，今天，要為各位做個簡單的 Swagger 介紹，以及如何在 .net 5.0 中建立 Swagger 服務。 什麼是 Swagger？簡言之， Swagger 是一套可以幫助開發者與使用者管理 API 的工具。 Swagger 的好處? Swagger 所產生的 API 文件，讓開發者可以知道有">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Use Swagger In .NET 5.0">
+<meta property="og:url" content="https://s164975.github.io/2021/06/12/2021-06-12-use-swagger-in-.net-5.0/index.html">
+<meta property="og:site_name" content="Ming">
+<meta property="og:description" content="在開發專案前端的過程中，使用 Swagger 讓我省了不少事，提升跟後端溝通的效率，大大減少了溝通成本，今天，要為各位做個簡單的 Swagger 介紹，以及如何在 .net 5.0 中建立 Swagger 服務。 什麼是 Swagger？簡言之， Swagger 是一套可以幫助開發者與使用者管理 API 的工具。 Swagger 的好處? Swagger 所產生的 API 文件，讓開發者可以知道有">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://s164975.github.io/img/post-cover/2021-06-12.jpg">
+<meta property="article:published_time" content="2021-06-11T16:00:00.000Z">
+<meta property="article:modified_time" content="2021-06-13T08:15:24.895Z">
+<meta property="article:author" content="Ming">
+<meta property="article:tag" content=".Net">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://s164975.github.io/img/post-cover/2021-06-12.jpg"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://s164975.github.io/2021/06/12/2021-06-12-use-swagger-in-.net-5.0/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"search.xml","languages":{"hits_empty":"We didn't find any results for the search: ${query}"}},
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: 'Copy successfully',
+    error: 'Copy error',
+    noSupport: 'The browser does not support'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: 'Just',
+    min: 'minutes ago',
+    hour: 'hours ago',
+    day: 'days ago',
+    month: 'months ago'
+  },
+  copyright: {"limitCount":50,"languages":{"author":"Author: Ming","link":"Link: ","source":"Source: Ming","info":"Copyright is owned by the author. For commercial reprints, please contact the author for authorization. For non-commercial reprints, please indicate the source."}},
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    jQuery: 'https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js',
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+    },
+    fancybox: {
+      js: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isanchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'Use Swagger In .NET 5.0',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2021-06-13 16:15:24'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    })(window)</script><meta name="generator" content="Hexo 5.4.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="author-avatar"><img class="avatar-img" src="/img/coding.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data"><div class="data-item is-center"><div class="data-item-link"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">6</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/tags/"><div class="headline">Tags</div><div class="length-num">6</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/categories/"><div class="headline">Categories</div><div class="length-num">5</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('/img/post-cover/2021-06-12.jpg')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">Ming</a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> Search</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">Use Swagger In .NET 5.0</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">Created</span><time class="post-meta-date-created" datetime="2021-06-11T16:00:00.000Z" title="Created 2021-06-12 00:00:00">2021-06-12</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">Updated</span><time class="post-meta-date-updated" datetime="2021-06-13T08:15:24.895Z" title="Updated 2021-06-13 16:15:24">2021-06-13</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/Net/">.Net</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="Use Swagger In .NET 5.0"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">Post View:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><p>在開發專案前端的過程中，使用 Swagger 讓我省了不少事，提升跟後端溝通的效率，大大減少了溝通成本，今天，要為各位做個簡單的 Swagger 介紹，以及如何在 .net 5.0 中建立 Swagger 服務。</p>
+<h3 id="什麼是-Swagger？"><a href="#什麼是-Swagger？" class="headerlink" title="什麼是 Swagger？"></a>什麼是 Swagger？</h3><p>簡言之， Swagger 是一套可以幫助開發者與使用者管理 API 的工具。</p>
+<h3 id="Swagger-的好處"><a href="#Swagger-的好處" class="headerlink" title="Swagger 的好處?"></a>Swagger 的好處?</h3><ul>
+<li>Swagger 所產生的 API 文件，讓開發者可以知道有哪些 API 可以介接。</li>
+<li>可以讓開發者知道，API 需要給那些參數，以及需要使用哪種請求方法（request methods），GET、POST、PUT、DELETE。</li>
+<li>隨著專案規模愈大，前後端需要傳遞的資料規格也更複雜，可以幫助前後端一起制定需要傳遞的資料規格。</li>
+<li>工程師通常都不喜歡寫文件，可以藉由 Swagger 讓工程師少寫文件。</li>
+<li>作為 API 的測試工具，當前端打 API 失敗或是回傳預期外的資料，都可以及時跟後端溝通。</li>
+</ul>
+<h3 id="建立-Swagger"><a href="#建立-Swagger" class="headerlink" title="建立 Swagger"></a>建立 Swagger</h3><ol>
+<li><p>從建立一個新專案開始<br><img src="https://lh3.google.com/u/0/d/19qs5rhUQXtaWZlxT63ShAxLhOkJ5oKhX=w1920-h881-iv1"></p>
+</li>
+<li><p>專案類型<br><img src="https://lh3.google.com/u/0/d/1P4ER8mNgpEukLyLM2PEQ7CAxb_G3R7Vl=w1095-h937-iv1"></p>
+</li>
+<li><p>設定專案名稱 與 位置<br><img src="https://lh3.google.com/u/0/d/1Hn-us1kpY85r1h-XIIFMFe76L6-UM90I=w1095-h937-iv1"></p>
+</li>
+<li><p>Framework 設定 .NET 5.0；打開 HTTPS；勾選「啟用 OpenAPI 支援」的話，專案會自動建立 Swagger 服務，我們這次用手動建立，取消勾選。<br><img src="https://lh3.google.com/u/0/d/1n1K5G_Ymx8m4WocD85HgQZ7M8Vt4IDmA=w1095-h937-iv1"></p>
+</li>
+<li><p>專案建立成後，開啟「套件管理員設定」<br><img src="https://lh3.google.com/u/0/d/1_QzCIxAoiweupYSC1ZUhScunJiSEiEO0=w1095-h937-iv1"></p>
+</li>
+<li><p>在套件來源中，查看是否有關於 NuGet 的套件來源，若無，按新增。<br><img src="https://lh3.google.com/u/0/d/198etUFz_rnblGRLiJoPdXc-oYF6jynub=w1095-h937-iv1"></p>
+</li>
+<li><p>將名稱改為：NuGet Package source (可自訂)<br>來源改為：<a target="_blank" rel="noopener" href="https://api.nuget.org/v3/index.json">https://api.nuget.org/v3/index.json</a><br><img src="https://lh3.google.com/u/0/d/11Nc9pcRsWMa6SqW5JTr0AS82FFTP6a90=w1095-h937-iv1"></p>
+</li>
+<li><p>將套件來源改為：Nuget Package source<br>並搜尋：Swashbuckle.AspNetCore<br>安裝<br><img src="https://lh3.google.com/u/0/d/1PEDuHjQ4wjAHYgYG2KCrYhBziBYjoRdU=w1095-h937-iv1"></p>
+</li>
+<li><p>安裝完成<br><img src="https://lh3.google.com/u/0/d/1S8Zn3gKvzzcf5D4jYvO5XwqDaDfS7ph9=w1095-h937-iv1"></p>
+</li>
+</ol>
+<h3 id="關於-Swashbuckle-AspNetCore"><a href="#關於-Swashbuckle-AspNetCore" class="headerlink" title="關於 Swashbuckle.AspNetCore"></a>關於 Swashbuckle.AspNetCore</h3><p>是一套用來文件化 .NET APIs 的 Swagger 工具。<br>主要有 3 個元件：</p>
+<ul>
+<li><strong>Swashbuckle.AspNetCore.SwaggerGen</strong><br>檢視 API 程式碼，並產生 Swagger Document 物件。</li>
+<li><strong>Swashbuckle.AspNetCore.Swagger</strong><br>可將 Swagger Document 物件公開為 JSON 端點。</li>
+<li><strong>Swashbuckle.AspNetCore.SwaggerUI</strong><br>產生 API 文件，讓使用者在網頁測試 API。<br><img src="https://lh3.google.com/u/0/d/1SqO6tJlPPZtf3sbPpgwKnsX163gs55u-=w1095-h937-iv1"></li>
+</ul>
+<ol>
+<li><p>將 <code>Swashbuckle.AspNetCore.SwaggerGen</code> 加入 <code>Startup.ConfigureServices</code>應用程式服務之中</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">services.AddSwaggerGen();</span><br></pre></td></tr></table></figure>
+<p><img src="https://lh3.google.com/u/0/d/1ILPLka201VwquR370v3T7t4tKgvyxEyJ=w1095-h937-iv1"></p>
+</li>
+<li><p>將 <code>Swashbuckle.AspNetCore.Swagger</code> 加入 <code>Startup.Configure</code></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">app.UseSwagger();</span><br></pre></td></tr></table></figure>
+<p><img src="https://lh3.google.com/u/0/d/1iUDDw2nhnFQRXxTCxbl-lm6kMxEIuO9j=w1095-h937-iv1"></p>
+</li>
+<li><p>將 <code>Swashbuckle.AspNetCore.SwaggerUI</code> 加入 <code>Startup.Configure</code></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">app.UseSwaggerUI(c =&gt;</span><br><span class="line">&#123;</span><br><span class="line">    c.SwaggerEndpoint(&quot;/swagger/v1/swagger.json&quot;, &quot;weatherForecast v1&quot;);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p><img src="https://lh3.google.com/u/0/d/1YazvO3AXJpQbTO8aKygApRTekBnKLNiC=w1095-h937-iv1"><br><code>SwaggerEndpoint</code> 方法的 - 第一個參數<br>為 Swagger Document 物件的 Endpoint 位置，<code>v1</code> 是 Swagger Document 物件的預設名稱，所以 <code>/swagger/v1/swagger.json</code> 是預設路由位置。<br><code>v1</code> 名稱是可以修改的，之後會補充。 - 第二個參數<br>會顯示在 Swagger UI 右上角，之後若有多個不同類別的 API，可以由此切換。<br><img src="https://lh3.google.com/u/0/d/1hgyvtCiYfngEWKXHdy5PyCyQPjNoKGda=w1095-h937-iv1"></p>
+</li>
+<li><p>將 <code>launchSettings.json</code> 內，專案的 <code>launchUrl</code> 改成 Swagger</p>
+</li>
+<li><p>選取專案，啟動 Swagger 服務 (Ctrl + F5)</p>
+</li>
+<li><p>Swagger UI 預設的網址路由為 <code>https://localhost:5001/swagger</code><br>顯示目前唯一的預設 API <code>WeatherForecast</code><br><img src="https://lh3.google.com/u/0/d/1Qs7xlWNktTa8idsaw_xAIr5chyG1gPdI=w1132-h969-iv1"></p>
+</li>
+<li><p>Swagger 所產生的 Swagger Document 物件 URL：<code>https://localhost:5001/swagger/v1/swagger.json</code><br><img src="https://lh3.google.com/u/0/d/14JbVkrTp3yhmVbD-HU37rEIt7ou_BL5f=w1132-h969-iv1"></p>
+</li>
+</ol>
+<p>以上就是建立 Swagger 的流程，關於 Swagger UI 顯示的資訊，說明與修改，將另開篇幅討稐。</p>
+<h2 id="參考"><a href="#參考" class="headerlink" title="參考"></a>參考</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://blog.miniasp.com/post/2019/12/21/ASP%E2%80%A4NET-Core-3-NSwag-OpenAPI-v3">如何在 ASP․NET Core 3 完整設定 NSwag 與 OpenAPI v3 文件</a></li>
+<li><a target="_blank" rel="noopener" href="https://docs.microsoft.com/zh-tw/aspnet/core/tutorials/getting-started-with-swashbuckle?view=aspnetcore-5.0&tabs=visual-studio">Swashbuckle 與 ASP.NET Core 使用者入門</a></li>
+</ul>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">Author: </span><span class="post-copyright-info"><a href="mailto:undefined">Ming</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">Link: </span><span class="post-copyright-info"><a href="https://s164975.github.io/2021/06/12/2021-06-12-use-swagger-in-.net-5.0/">https://s164975.github.io/2021/06/12/2021-06-12-use-swagger-in-.net-5.0/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">Copyright Notice: </span><span class="post-copyright-info">All articles in this blog are licensed under <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> unless stating additionally.</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/Net/">.Net</a></div><div class="post_share"></div></div><nav class="pagination-post" id="pagination"><div class="next-post pull-full"><a href="/2021/05/22/2021-05-22-angular-directive/"><img class="next-cover" src="/img/post-cover/2021-05-22.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">Next Post</div><div class="next_info">How to custom Angular attribute directive</div></div></a></div></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="card-info-avatar is-center"><img class="avatar-img" src="/img/coding.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/><div class="author-info__name">Ming</div><div class="author-info__description"></div></div><div class="card-info-data"><div class="card-info-data-item is-center"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">6</div></a></div><div class="card-info-data-item is-center"><a href="/tags/"><div class="headline">Tags</div><div class="length-num">6</div></a></div><div class="card-info-data-item is-center"><a href="/categories/"><div class="headline">Categories</div><div class="length-num">5</div></a></div></div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>Catalog</span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BB%80%E9%BA%BC%E6%98%AF-Swagger%EF%BC%9F"><span class="toc-number">1.</span> <span class="toc-text">什麼是 Swagger？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Swagger-%E7%9A%84%E5%A5%BD%E8%99%95"><span class="toc-number">2.</span> <span class="toc-text">Swagger 的好處?</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BB%BA%E7%AB%8B-Swagger"><span class="toc-number">3.</span> <span class="toc-text">建立 Swagger</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%97%9C%E6%96%BC-Swashbuckle-AspNetCore"><span class="toc-number">4.</span> <span class="toc-text">關於 Swashbuckle.AspNetCore</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%83%E8%80%83"><span class="toc-number"></span> <span class="toc-text">參考</span></a></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>Recent Post</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2021/06/12/2021-06-12-use-swagger-in-.net-5.0/" title="Use Swagger In .NET 5.0"><img src="/img/post-cover/2021-06-12.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Use Swagger In .NET 5.0"/></a><div class="content"><a class="title" href="/2021/06/12/2021-06-12-use-swagger-in-.net-5.0/" title="Use Swagger In .NET 5.0">Use Swagger In .NET 5.0</a><time datetime="2021-06-11T16:00:00.000Z" title="Created 2021-06-12 00:00:00">2021-06-12</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/05/22/2021-05-22-angular-directive/" title="How to custom Angular attribute directive"><img src="/img/post-cover/2021-05-22.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="How to custom Angular attribute directive"/></a><div class="content"><a class="title" href="/2021/05/22/2021-05-22-angular-directive/" title="How to custom Angular attribute directive">How to custom Angular attribute directive</a><time datetime="2021-05-21T16:00:00.000Z" title="Created 2021-05-22 00:00:00">2021-05-22</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/05/12/2021-05-12-custom-pipes-in-angular/" title="How to custom Angular pipe"><img src="/img/post-cover/2021-05-12.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="How to custom Angular pipe"/></a><div class="content"><a class="title" href="/2021/05/12/2021-05-12-custom-pipes-in-angular/" title="How to custom Angular pipe">How to custom Angular pipe</a><time datetime="2021-05-12T11:21:02.000Z" title="Created 2021-05-12 19:21:02">2021-05-12</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/05/08/2021-05-08-javascript-switch/" title="在 JavaScript 中使用 switch(true)"><img src="/img/post-cover/2021-05-08.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="在 JavaScript 中使用 switch(true)"/></a><div class="content"><a class="title" href="/2021/05/08/2021-05-08-javascript-switch/" title="在 JavaScript 中使用 switch(true)">在 JavaScript 中使用 switch(true)</a><time datetime="2021-05-08T11:21:02.000Z" title="Created 2021-05-08 19:21:02">2021-05-08</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/05/02/2021-05-02-backup-sql-server-db/" title="How to backup SQL Serve DB"><img src="/img/post-cover/2021-05-02.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="How to backup SQL Serve DB"/></a><div class="content"><a class="title" href="/2021/05/02/2021-05-02-backup-sql-server-db/" title="How to backup SQL Serve DB">How to backup SQL Serve DB</a><time datetime="2021-05-02T14:34:55.000Z" title="Created 2021-05-02 22:34:55">2021-05-02</time></div></div></div></div></div></div></main><footer id="footer" style="background: black"><div id="footer-wrap"><div class="copyright">&copy;2021 By Ming</div><div class="framework-info"><span>Framework </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>Theme </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="Read Mode"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="Switch Between Light And Dark Mode"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="Toggle between single-column and double-column"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="Setting"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="Table Of Contents"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="Back To Top"><i class="fas fa-arrow-up"></i></button></div></div><div id="local-search"><div class="search-dialog"><div class="search-dialog__title" id="local-search-title">Local search</div><div id="local-input-panel"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="Search for Posts" type="text"/></div></div></div><hr/><div id="local-search-results"></div><span class="search-close-button"><i class="fas fa-times"></i></span></div><div id="search-mask"></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="/js/search/local-search.js"></script><div class="js-pjax"></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>

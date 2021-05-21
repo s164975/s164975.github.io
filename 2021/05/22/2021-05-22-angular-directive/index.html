@@ -1,0 +1,199 @@
+<!DOCTYPE html><html lang="en" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>How to custom Angular attribute directive | Ming</title><meta name="keywords" content="Angular"><meta name="author" content="Ming"><meta name="copyright" content="Ming"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="在 Angular 中 Directive 分成三種：  Component：帶有 templete 的 directive。 Structural Directive：可以改變 DOM 的結構，如：NgIf, NgFor, 以及 NgSwitch Directive：可以改變 DOM ，或 component 呈現的樣式或行為，如NgClass , NgStyle  今天，我要為各位介紹如何使用">
+<meta property="og:type" content="article">
+<meta property="og:title" content="How to custom Angular attribute directive">
+<meta property="og:url" content="https://s164975.github.io/2021/05/22/2021-05-22-angular-directive/index.html">
+<meta property="og:site_name" content="Ming">
+<meta property="og:description" content="在 Angular 中 Directive 分成三種：  Component：帶有 templete 的 directive。 Structural Directive：可以改變 DOM 的結構，如：NgIf, NgFor, 以及 NgSwitch Directive：可以改變 DOM ，或 component 呈現的樣式或行為，如NgClass , NgStyle  今天，我要為各位介紹如何使用">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://s164975.github.io/img/post-cover/2021-05-22.jpg">
+<meta property="article:published_time" content="2021-05-21T16:00:00.000Z">
+<meta property="article:modified_time" content="2021-06-27T07:10:48.950Z">
+<meta property="article:author" content="Ming">
+<meta property="article:tag" content="Angular">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://s164975.github.io/img/post-cover/2021-05-22.jpg"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://s164975.github.io/2021/05/22/2021-05-22-angular-directive/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"search.xml","languages":{"hits_empty":"We didn't find any results for the search: ${query}"}},
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: 'Copy successfully',
+    error: 'Copy error',
+    noSupport: 'The browser does not support'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: 'Just',
+    min: 'minutes ago',
+    hour: 'hours ago',
+    day: 'days ago',
+    month: 'months ago'
+  },
+  copyright: {"limitCount":50,"languages":{"author":"Author: Ming","link":"Link: ","source":"Source: Ming","info":"Copyright is owned by the author. For commercial reprints, please contact the author for authorization. For non-commercial reprints, please indicate the source."}},
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    jQuery: 'https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js',
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+    },
+    fancybox: {
+      js: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isanchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'How to custom Angular attribute directive',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: false,
+  postUpdate: '2021-06-27 15:10:48'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    })(window)</script><meta name="generator" content="Hexo 5.4.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="author-avatar"><img class="avatar-img" src="/img/coding.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data"><div class="data-item is-center"><div class="data-item-link"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">6</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/tags/"><div class="headline">Tags</div><div class="length-num">6</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/categories/"><div class="headline">Categories</div><div class="length-num">5</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('/img/post-cover/2021-05-22.jpg')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">Ming</a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> Search</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">How to custom Angular attribute directive</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">Created</span><time class="post-meta-date-created" datetime="2021-05-21T16:00:00.000Z" title="Created 2021-05-22 00:00:00">2021-05-22</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">Updated</span><time class="post-meta-date-updated" datetime="2021-06-27T07:10:48.950Z" title="Updated 2021-06-27 15:10:48">2021-06-27</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/Angular/">Angular</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="How to custom Angular attribute directive"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">Post View:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><p>在 Angular 中 Directive 分成三種：</p>
+<ol>
+<li><strong>Component</strong>：帶有 templete 的 directive。</li>
+<li><strong>Structural Directive</strong>：可以改變 DOM 的結構，如：<code>NgIf</code>, <code>NgFor</code>, 以及 <code>NgSwitch</code></li>
+<li><strong>Directive</strong>：可以改變 DOM ，或 component 呈現的樣式或行為，如<code>NgClass</code> , <code>NgStyle</code></li>
+</ol>
+<p>今天，我要為各位介紹如何使用客製化 directive 來改變一段文字的背景顏色</p>
+<ol>
+<li><p>首先 component 的 templete</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">p</span>&gt;</span>萊納，你坐啊！<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br></pre></td></tr></table></figure></li>
+<li><p>建立 directive 指令，跟 component 一樣，只是將 c 改成 d (directive 簡寫)，取名 add-style</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ng g d add-style</span><br></pre></td></tr></table></figure></li>
+<li><p>來看看新建立的 <code>add-style.directive.ts</code></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">@Directive(&#123;</span><br><span class="line">  <span class="attr">selector</span>: <span class="string">&#x27;[addStyle]&#x27;</span></span><br><span class="line">&#125;)</span><br><span class="line"><span class="keyword">export</span> <span class="class"><span class="keyword">class</span> <span class="title">AddStyleDirective</span> </span>&#123;</span><br><span class="line">  <span class="function"><span class="title">constructor</span>(<span class="params"></span>)</span> &#123; &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>@Directive</code>：這是 Decorator ，定義 class 為 directive。</li>
+<li><code>selector</code>： 決定套用在目標( DOM 或 Component )上的屬性( Attribute )名稱，如果名稱是<code>[addStyle]</code>，那 <code>&lt;p addStyle&gt;...&lt;/p&gt;</code> 與 <code>&lt;div addStyle&gt;...&lt;/div&gt; </code> 都會吃到，但若名稱是 <code>p[addStyle]</code> ，則只有 <code>&lt;p addStyle&gt;...&lt;/p&gt;</code> 會吃到。</li>
+</ul>
+</li>
+<li><p>我們可以藉由注入 <a target="_blank" rel="noopener" href="https://angular.io/api/core/ElementRef">ElementRef</a>，使用 ElementRef 的 <code>nativeElement</code> 屬性取得宿主的 DOM<br><code>add-style.directive.ts</code></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="class"><span class="keyword">class</span> <span class="title">AddStyleDirective</span> </span>&#123;</span><br><span class="line">  <span class="function"><span class="title">constructor</span>(<span class="params">private elRef: ElementRef</span>)</span> &#123;&#125;</span><br><span class="line">  ngOnInit(): <span class="keyword">void</span> &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="built_in">this</span>.elRef.nativeElement);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>template</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">p</span> <span class="attr">addStyle</span>&gt;</span>萊納，你坐啊！<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>console.log</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;p _ngcontent-wpy-c12=&quot;&quot; addstyle=&quot;&quot;&gt;萊納，你坐啊！&lt;/p&gt;</span><br></pre></td></tr></table></figure></li>
+<li><p>使用 DOM API 來改變樣式</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="class"><span class="keyword">class</span> <span class="title">AddStyleDirective</span> </span>&#123;</span><br><span class="line">  <span class="function"><span class="title">constructor</span>(<span class="params">private elRef: ElementRef</span>)</span> &#123;&#125;</span><br><span class="line"></span><br><span class="line">  ngOnInit(): <span class="keyword">void</span> &#123;</span><br><span class="line">    <span class="built_in">this</span>.elRef.nativeElement.style.backgroundColor = <span class="string">&#x27;tomato&#x27;</span>;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>呈現如下<br><img src="https://lh3.google.com/u/0/d/1HwRL_P4i07rKB2n80HV7N1FSgrqarDfN=w1920-h937-iv1"></p>
+<div class="note info simple"><p>上述的方式，可以讓我們很方便地取得 DOM 更改樣式，但 <a target="_blank" rel="noopener" href="https://angular.io/api/core/ElementRef#properties">Angular 官方</a>並不推薦這種方式，會產生以下問題：</p>
+<ul>
+<li>直接訪問 DOM，會有 XSS 攻擊的風險。</li>
+<li>會使應用( application )和渲染層( rendering )之間產生緊密耦合。這將導致無法分開兩者，也就無法將應用程式發佈到 Web Worker 中<br>因此，Angular 官方推薦使用 <a target="_blank" rel="noopener" href="https://angular.io/api/core/Renderer2">Renderer2</a> ，避免以上問題。</li>
+</ul>
+</div></li>
+<li><p>將 <code>Renderer2</code> 注入後，使用其 <code>setStyle</code> 函式設定樣式，優雅地解決了此問題</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="class"><span class="keyword">class</span> <span class="title">AddStyleDirective</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="title">constructor</span>(<span class="params">private elRef: ElementRef, private renderer: Renderer2</span>)</span> &#123;&#125;</span><br><span class="line"></span><br><span class="line">  ngOnInit(): <span class="keyword">void</span> &#123;</span><br><span class="line">    <span class="comment">// this.elRef.nativeElement.style.backgroundColor = &#x27;tomato&#x27;;</span></span><br><span class="line">    <span class="built_in">this</span>.renderer.setStyle(</span><br><span class="line">      <span class="built_in">this</span>.elRef.nativeElement,</span><br><span class="line">      <span class="string">&#x27;backgroundColor&#x27;</span>,</span><br><span class="line">      <span class="string">&#x27;tomato&#x27;</span></span><br><span class="line">    );</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<li><p>但如果將設定值寫死在程式內，會非常沒有彈性，所以我們會使用<code>@Input()</code>，將屬性值從外部傳入</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="class"><span class="keyword">class</span> <span class="title">AddStyleDirective</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">  @Input() backgroundColor: string;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="title">constructor</span>(<span class="params">private elRef: ElementRef, private renderer: Renderer2</span>)</span> &#123;&#125;</span><br><span class="line"></span><br><span class="line">  ngOnInit(): <span class="keyword">void</span> &#123;</span><br><span class="line">    <span class="built_in">this</span>.renderer.setStyle(</span><br><span class="line">      <span class="built_in">this</span>.elRef.nativeElement,</span><br><span class="line">      <span class="string">&#x27;backgroundColor&#x27;</span>,</span><br><span class="line">      <span class="built_in">this</span>.backgroundColor</span><br><span class="line">    );</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>Template</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">p</span> <span class="attr">addStyle</span> [<span class="attr">backgroundColor</span>]=<span class="string">&quot;&#x27;tomato&#x27;&quot;</span>&gt;</span>萊納，你坐啊！<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br></pre></td></tr></table></figure></li>
+<li><p>進一步優化 directive 程式碼，我們將樣式的邏輯從 <code>ngOnInit( )</code> 移到 <code>@Input( ) setter</code></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="class"><span class="keyword">class</span> <span class="title">AddStyleDirective</span> </span>&#123;</span><br><span class="line">  @Input() <span class="keyword">set</span> <span class="title">backgroundColor</span>(<span class="params">color: string</span>) &#123;</span><br><span class="line">    <span class="built_in">this</span>.renderer.setStyle(<span class="built_in">this</span>.elRef.nativeElement, <span class="string">&#x27;backgroundColor&#x27;</span>, color);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="title">constructor</span>(<span class="params">private elRef: ElementRef, private renderer: Renderer2</span>)</span> &#123;&#125;</span><br><span class="line"></span><br><span class="line">  ngOnInit(): <span class="keyword">void</span> &#123;&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<li><p>同樣地，template 也是有優化的空間，<code>p</code> element 包括了 <code>addStyle</code> directive 與 <code>backgroundColor</code> @Input property，這段也是可以簡化的</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">p</span> <span class="attr">addStyle</span> [<span class="attr">backgroundColor</span>]=<span class="string">&quot;&#x27;tomato&#x27;&quot;</span>&gt;</span>萊納，你坐啊！<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br></pre></td></tr></table></figure></li>
+<li><p>將 @Input 與 directive selector 設定相同的名稱(addStyle)</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">@Input() <span class="keyword">set</span> <span class="title">addStyle</span>(<span class="params">color: string</span>) &#123;</span><br><span class="line">    <span class="built_in">this</span>.renderer.setStyle(<span class="built_in">this</span>.elRef.nativeElement, <span class="string">&#x27;backgroundColor&#x27;</span>, color);</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure></li>
+<li><p>我們可以技巧性地將第一個 addStyle 拿掉，只留下 [addStyle]</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">p</span> [<span class="attr">addStyle</span>]=<span class="string">&quot;&#x27;tomato&#x27;&quot;</span>&gt;</span>萊納，你坐啊！<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>可以同時完成兩件事： - 不僅可以使用這個 directive - 同時，也可以使用 directive 上所設定的 @Input property</p>
+</li>
+<li><p>但這會有個問題，@Input property 名稱變成了 addStyle，變得不明確，我們可以使用別名來解決此問題</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">@Input(<span class="string">&#x27;addStyle&#x27;</span>) <span class="keyword">set</span> <span class="title">backgroundColor</span>(<span class="params">color: string</span>) &#123;</span><br><span class="line">    <span class="built_in">this</span>.renderer.setStyle(<span class="built_in">this</span>.elRef.nativeElement, <span class="string">&#x27;backgroundColor&#x27;</span>, color);</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+<p>如此一來，不僅可以維持原本的簡潔，更賦予@Input property 有意義的名稱，如：backgroundColor</p>
+</li>
+</ol>
+<p>以上，就是製作 attribute directive 的方式，這樣做的好處在於，可將相同的顯示樣式，套用在多個 element 上，至於實作的細節，即便再怎樣複雜，我們只要專注於 directive 本身就好。</p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">Author: </span><span class="post-copyright-info"><a href="mailto:undefined">Ming</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">Link: </span><span class="post-copyright-info"><a href="https://s164975.github.io/2021/05/22/2021-05-22-angular-directive/">https://s164975.github.io/2021/05/22/2021-05-22-angular-directive/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">Copyright Notice: </span><span class="post-copyright-info">All articles in this blog are licensed under <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> unless stating additionally.</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/Angular/">Angular</a></div><div class="post_share"></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2021/06/12/2021-06-12-use-swagger-in-.net-5.0/"><img class="prev-cover" src="/img/post-cover/2021-06-12.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">Previous Post</div><div class="prev_info">Use Swagger In .NET 5.0</div></div></a></div><div class="next-post pull-right"><a href="/2021/05/12/2021-05-12-custom-pipes-in-angular/"><img class="next-cover" src="/img/post-cover/2021-05-12.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">Next Post</div><div class="next_info">How to custom Angular pipe</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span> Related Articles</span></div><div class="relatedPosts-list"><div><a href="/2021/05/12/2021-05-12-custom-pipes-in-angular/" title="How to custom Angular pipe"><img class="cover" src="/img/post-cover/2021-05-12.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-05-12</div><div class="title">How to custom Angular pipe</div></div></a></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="card-info-avatar is-center"><img class="avatar-img" src="/img/coding.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/><div class="author-info__name">Ming</div><div class="author-info__description"></div></div><div class="card-info-data"><div class="card-info-data-item is-center"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">6</div></a></div><div class="card-info-data-item is-center"><a href="/tags/"><div class="headline">Tags</div><div class="length-num">6</div></a></div><div class="card-info-data-item is-center"><a href="/categories/"><div class="headline">Categories</div><div class="length-num">5</div></a></div></div></div><div class="sticky_layout"><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>Recent Post</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2021/06/12/2021-06-12-use-swagger-in-.net-5.0/" title="Use Swagger In .NET 5.0"><img src="/img/post-cover/2021-06-12.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Use Swagger In .NET 5.0"/></a><div class="content"><a class="title" href="/2021/06/12/2021-06-12-use-swagger-in-.net-5.0/" title="Use Swagger In .NET 5.0">Use Swagger In .NET 5.0</a><time datetime="2021-06-11T16:00:00.000Z" title="Created 2021-06-12 00:00:00">2021-06-12</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/05/22/2021-05-22-angular-directive/" title="How to custom Angular attribute directive"><img src="/img/post-cover/2021-05-22.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="How to custom Angular attribute directive"/></a><div class="content"><a class="title" href="/2021/05/22/2021-05-22-angular-directive/" title="How to custom Angular attribute directive">How to custom Angular attribute directive</a><time datetime="2021-05-21T16:00:00.000Z" title="Created 2021-05-22 00:00:00">2021-05-22</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/05/12/2021-05-12-custom-pipes-in-angular/" title="How to custom Angular pipe"><img src="/img/post-cover/2021-05-12.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="How to custom Angular pipe"/></a><div class="content"><a class="title" href="/2021/05/12/2021-05-12-custom-pipes-in-angular/" title="How to custom Angular pipe">How to custom Angular pipe</a><time datetime="2021-05-12T11:21:02.000Z" title="Created 2021-05-12 19:21:02">2021-05-12</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/05/08/2021-05-08-javascript-switch/" title="在 JavaScript 中使用 switch(true)"><img src="/img/post-cover/2021-05-08.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="在 JavaScript 中使用 switch(true)"/></a><div class="content"><a class="title" href="/2021/05/08/2021-05-08-javascript-switch/" title="在 JavaScript 中使用 switch(true)">在 JavaScript 中使用 switch(true)</a><time datetime="2021-05-08T11:21:02.000Z" title="Created 2021-05-08 19:21:02">2021-05-08</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/05/02/2021-05-02-backup-sql-server-db/" title="How to backup SQL Serve DB"><img src="/img/post-cover/2021-05-02.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="How to backup SQL Serve DB"/></a><div class="content"><a class="title" href="/2021/05/02/2021-05-02-backup-sql-server-db/" title="How to backup SQL Serve DB">How to backup SQL Serve DB</a><time datetime="2021-05-02T14:34:55.000Z" title="Created 2021-05-02 22:34:55">2021-05-02</time></div></div></div></div></div></div></main><footer id="footer" style="background: black"><div id="footer-wrap"><div class="copyright">&copy;2021 By Ming</div><div class="framework-info"><span>Framework </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>Theme </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="Read Mode"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="Switch Between Light And Dark Mode"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="Toggle between single-column and double-column"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="Setting"><i class="fas fa-cog fa-spin"></i></button><button id="go-up" type="button" title="Back To Top"><i class="fas fa-arrow-up"></i></button></div></div><div id="local-search"><div class="search-dialog"><div class="search-dialog__title" id="local-search-title">Local search</div><div id="local-input-panel"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="Search for Posts" type="text"/></div></div></div><hr/><div id="local-search-results"></div><span class="search-close-button"><i class="fas fa-times"></i></span></div><div id="search-mask"></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="/js/search/local-search.js"></script><div class="js-pjax"></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
